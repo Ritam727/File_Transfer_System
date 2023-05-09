@@ -1,5 +1,5 @@
 {
-  "name": "file_transfer_system",
+  "name": "file-transfer",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,12 +8,12 @@
     "@testing-library/user-event": "^13.5.0",
     "downloadjs": "^1.4.7",
     "localforage": "^1.10.0",
+    "bootstrap": "^5.3.0-alpha3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
     "sass": "^1.62.1",
-    "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1",
     "web-vitals": "^2.1.4"
   },
@@ -40,5 +40,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.2"
   }
 }
+
