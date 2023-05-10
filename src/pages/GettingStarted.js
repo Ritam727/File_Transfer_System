@@ -11,7 +11,7 @@ const GettingStarted = () => {
       <div className="CreateRoomcontainer">
         <div className="heading">
           <div className="Logo">
-            <img src={require("../images/logo.png")} alt="" />
+            <img src={require("../images/logo-dark.png")} alt="" />
           </div>
 
           <div className="tagLine">

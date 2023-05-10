@@ -1,10 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&family=Roboto:wght@300;400;500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;400;500;700&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Roboto Slab', serif;
 }
 
 /* CreateRoom page styling */
@@ -14,7 +14,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgb(50, 48, 87);
+  // background: url("../images/urban-wall-surface.jpg");
+  // background-size: cover;
+  background-color: rgb(255, 255, 255);
   
   .CreateRoomcontainer {
     width: 80vw;

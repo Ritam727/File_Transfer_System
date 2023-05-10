@@ -28,7 +28,7 @@ const FileReceiver = () => {
     sender = event.target[0].value;
     socket.emit("receiver-join", { uid: receiverId, sender_uid: sender });
   }
-  
+
   useEffect(() => {
     if (socket === null) {
       setSocket(io());
@@ -70,6 +70,11 @@ const FileReceiver = () => {
       <div className="ReceiverContainer">
         <div className="ReceiverLeft">
           <div className="ID">
+            <img
+              className="bgImage"
+              src={require("../images/fileReceiver.jpg")}
+              alt=""
+            />
             {senderId ? (
               <>
                 <h2>Room ID :</h2>

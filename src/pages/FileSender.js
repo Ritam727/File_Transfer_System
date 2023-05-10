@@ -46,6 +46,8 @@ const CreateRoom = () => {
   let cnt = 0;
   let transmittedData = 0;
   function click() {
+    document.getElementsByClassName("bgImage")[0].classList.add("animate");
+
     join = generateId();
     setJoinId(join);
     socket.emit("sender-join", { uid: join });
@@ -106,6 +108,11 @@ const CreateRoom = () => {
       <div className="SenderContainer">
         <div className="SenderLeft">
           <div className="ID">
+            <img
+              className="bgImage"
+              src={require("../images/fileSender.jpg")}
+              alt=""
+            />
             {joinId ? (
               <>
                 <>
@@ -121,8 +128,13 @@ const CreateRoom = () => {
                   onChange={takeUserName}
                   type="text"
                   placeholder="Eren Yeager"
+                  required
                 />
-                <button className="createRoom" onClick={click}>
+                <button
+                  className="createRoom"
+                  onClick={click}
+                  disabled={!userName}
+                >
                   Create Room
                 </button>
               </>
