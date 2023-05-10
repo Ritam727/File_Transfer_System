@@ -71,7 +71,7 @@ const FileReceiver = () => {
           <div className="ID">
             <img
               className="bgImage"
-              src={require("../images/fileReceiver.jpg")}
+              src={require("../images/fileReceiver.png")}
               alt=""
             />
             {senderId ? (

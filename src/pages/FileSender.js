@@ -129,7 +129,7 @@ const CreateRoom = () => {
           <div className="ID">
             <img
               className="bgImage"
-              src={require("../images/fileSender.jpg")}
+              src={require("../images/fileSender.png")}
               alt=""
             />
             {joinId ? (
