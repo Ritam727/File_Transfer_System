@@ -23,7 +23,7 @@ const DragDropFile = (props) => {
     e.stopPropagation();
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      props.onChange(e);
+      props.onDragAndDrop(e);
       // handleFiles(e.dataTransfer.files);
     }
   };

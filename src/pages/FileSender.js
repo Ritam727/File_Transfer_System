@@ -55,6 +55,27 @@ const CreateRoom = () => {
       receiverId = uid;
     });
   }
+  function handleFileDragAndDrop(event) {
+    let file = event.dataTransfer.files[0];
+    const fileReader = new FileReader();
+    fileReader.onload = function (e) {
+      let buffer = new Uint8Array(fileReader.result);
+      let fileElem = createFileElement(file.name, cnt);
+      document.getElementById("files").appendChild(fileElem);
+      shareFile(
+        {
+          filename: file.name,
+          total_buffer_size: buffer.length,
+          buffer_size: 262144,
+          userName: userName,
+        },
+        buffer
+      );
+    };
+    fileReader.readAsArrayBuffer(file);
+    cnt += 1;
+    transmittedData = 0;
+  }
   function handleFileUpload(event) {
     let file = event.target.files[0];
     const fileReader = new FileReader();
@@ -119,7 +140,7 @@ const CreateRoom = () => {
                   <h2>{userName}'s Room ID :</h2>
                   <h1>{joinId}</h1>
                 </>
-                <DragDropFile onChange={handleFileUpload}></DragDropFile>
+                <DragDropFile onChange={handleFileUpload} onDragAndDrop={handleFileDragAndDrop}></DragDropFile>
               </>
             ) : (
               <>
