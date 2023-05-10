@@ -13,9 +13,11 @@ const Room = () => {
   let sender = null;
   let receiverId = null;
   const [socket, setSocket] = useState(null);
+  const [fileList, setFileList] = useState([]);
   let transmittedData = 0;
   let bufferData = [];
   let metadata = {};
+  let cnt = 0;
   function submitForm(event) {
     event.preventDefault();
     receiverId = generateId();
@@ -32,6 +34,15 @@ const Room = () => {
         transmittedData = 0;
         metadata = metaData;
         bufferData = [];
+        const fileElem = document.createElement("div");
+        const fileName = document.createElement("p");
+        const percent = document.createElement("p");
+        fileName.innerHTML = metadata.filename;
+        percent.innerHTML = "0";
+        percent.id = cnt;
+        fileElem.appendChild(fileName);
+        fileElem.appendChild(percent);
+        document.getElementById("files").appendChild(fileElem);
         socket.emit("fs-start", { uid: sender });
       });
       socket.on("fs-share", function (buffer) {
@@ -40,13 +51,16 @@ const Room = () => {
         transmittedData += buffer.byteLength;
         if (transmittedData === metadata.total_buffer_size) {
           console.log("Downloading ", metadata.filename);
+          document.getElementById(cnt).innerHTML = Math.trunc(transmittedData*100/metadata.total_buffer_size);
+          cnt += 1;
           download(new Blob(bufferData), metadata.filename);
         } else {
+          document.getElementById(cnt).innerHTML = Math.trunc(transmittedData*100/metadata.total_buffer_size);
           socket.emit("fs-start", { uid: sender });
         }
       });
     }
-  }, [socket]);
+  }, [socket, fileList]);
   return (
     <div>
       {!senderId ? (
@@ -55,7 +69,11 @@ const Room = () => {
           <button type="submit">Submit</button>
         </form>
       ) : (
-        <p>Room id : {senderId}</p>
+        <div>
+          <p>Room id : {senderId}</p>
+          <p>Files Shared:</p>
+          <div id="files"></div>
+        </div>
       )}
     </div>
   );

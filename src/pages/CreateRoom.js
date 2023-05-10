@@ -12,6 +12,8 @@ function generateId() {
 const CreateRoom = () => {
   const [joinId, setJoinId] = useState(null);
   let join = null;
+  let cnt = 0;
+  let transmittedData = 0;
   function click() {
     join = generateId();
     setJoinId(join);
@@ -25,32 +27,44 @@ const CreateRoom = () => {
     const fileReader = new FileReader();
     fileReader.onload = function (e) {
       let buffer = new Uint8Array(fileReader.result);
+      const fileElem = document.createElement("div");
+      const fileName = document.createElement("p");
+      const percent = document.createElement("p");
+      fileName.innerHTML = file.name;
+      percent.innerHTML = "0";
+      percent.id = cnt;
+      fileElem.appendChild(fileName);
+      fileElem.appendChild(percent);
+      document.getElementById("files").appendChild(fileElem);
       shareFile(
         {
           filename: file.name,
           total_buffer_size: buffer.length,
-          buffer_size: 32768,
+          buffer_size: 262144,
         },
         buffer
       );
     };
     fileReader.readAsArrayBuffer(file);
+    cnt += 1;
+    transmittedData = 0;
   }
 
   function shareFile(metadata, buffer) {
-    console.log(joinId);
     socket.emit("file-meta", {
       uid: joinId,
       metadata: metadata,
     });
     socket.on("fs-share", function () {
       let chunk = buffer.slice(0, metadata.buffer_size);
+      transmittedData += chunk.length;
       buffer = buffer.slice(metadata.buffer_size, buffer.length);
       if (chunk.length !== 0) {
         socket.emit("file-raw", {
           uid: joinId,
           buffer: chunk,
         });
+        document.getElementById(cnt).innerHTML = Math.trunc(transmittedData*100/metadata.total_buffer_size);
       }
     });
   }
@@ -62,6 +76,8 @@ const CreateRoom = () => {
         <div>
           <p>Room id : {joinId}</p>
           <input type="file" onChange={handleFileUpload}></input>
+          <p>Files Shared:</p>
+          <div id="files"></div>
         </div>
       )}
     </div>
