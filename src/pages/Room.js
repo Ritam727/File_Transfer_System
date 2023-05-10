@@ -33,9 +33,11 @@ const Room = () => {
         socket.emit("fs-start", { uid: sender });
       });
       socket.on("fs-share", function (buffer) {
+        if (buffer == null) return;
         bufferData.push(buffer);
         transmittedData += buffer.byteLength;
         if (transmittedData === metadata.total_buffer_size) {
+          console.log("Downloading ", metadata.filename);
           download(new Blob(bufferData), metadata.filename);
         } else {
           socket.emit('fs-start', { uid: sender });

@@ -10,8 +10,9 @@ function generateId() {
 
 const CreateRoom = () => {
   const [joinId, setJoinId] = useState(null);
+  let join = null;
   function click() {
-    const join = generateId();
+    join = generateId();
     setJoinId(join);
     socket.emit("sender-join", { uid: join });
     socket.on("init", function (uid) {
@@ -33,8 +34,9 @@ const CreateRoom = () => {
   }
 
   function shareFile(metadata, buffer) {
+    console.log(joinId);
     socket.emit("file-meta", {
-      uid: receiverId,
+      uid: joinId,
       metadata: metadata
     });
     socket.on("fs-share", function () {
@@ -42,7 +44,7 @@ const CreateRoom = () => {
       buffer = buffer.slice(metadata.buffer_size, buffer.length);
       if (chunk.length !== 0) {
         socket.emit("file-raw", {
-          uid: receiverId,
+          uid: joinId,
           buffer: chunk
         });
       }
