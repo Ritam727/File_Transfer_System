@@ -12,7 +12,7 @@ const Receiver = () => {
   return (
     <div className="WorkContainer">
       <div className="doImage">
-        <img src={require("../images/receive1.jpg")} alt="" />
+        <img src={require("../images/receive.png")} alt="" />
       </div>
       <div className="Button">
         <button onClick={receiveFile}>Receive File</button>

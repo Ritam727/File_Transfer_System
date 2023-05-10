@@ -13,7 +13,7 @@ const Sender = () => {
   return (
     <div className="WorkContainer">
       <div className="doImage">
-        <img src={require("../images/send.jpg")} alt="" />
+        <img src={require("../images/send.png")} alt="" />
       </div>
 
       <div className="Button">

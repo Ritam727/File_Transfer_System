@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+
+import DragDropFile from "../components/DragDropFile";
+import "../styles/CreateRoom.scss";
+
 import io from "socket.io-client";
 const socket = io();
 let receiverId;
@@ -35,6 +39,7 @@ const CreateRoom = () => {
       percent.id = cnt;
       fileElem.appendChild(fileName);
       fileElem.appendChild(percent);
+
       document.getElementById("files").appendChild(fileElem);
       shareFile(
         {
@@ -64,22 +69,33 @@ const CreateRoom = () => {
           uid: joinId,
           buffer: chunk,
         });
-        document.getElementById(cnt).innerHTML = Math.trunc(transmittedData*100/metadata.total_buffer_size);
+        document.getElementById(cnt).innerHTML = Math.trunc(
+          (transmittedData * 100) / metadata.total_buffer_size
+        );
       }
     });
   }
   return (
-    <div id="join-id">
-      {!joinId ? (
-        <button onClick={click}>Create Room</button>
-      ) : (
-        <div>
-          <p>Room id : {joinId}</p>
-          <input type="file" onChange={handleFileUpload}></input>
-          <p>Files Shared:</p>
-          <div id="files"></div>
+    <div className="senderBox">
+      <div className="SenderContainer">
+        <div className="Left">
+          <div className="ID">
+            {joinId ? (
+              <>
+                <h2>Room ID :</h2>
+                <h1>{joinId}</h1>
+              </>
+            ) : (
+              <button onClick={click}>Create Room</button>
+            )}
+          </div>
+          <DragDropFile onChange={handleFileUpload}></DragDropFile>
         </div>
-      )}
+
+        <div className="Right" id="files">
+          <h1>hehe</h1>
+        </div>
+      </div>
     </div>
   );
 };

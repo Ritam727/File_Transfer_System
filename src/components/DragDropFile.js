@@ -1,6 +1,7 @@
 import React from "react";
+import "../styles/DragDropFile.scss";
 
-const DragDropFile = () => {
+const DragDropFile = (props) => {
   const [dragActive, setDragActive] = React.useState(false);
   // ref
   const inputRef = React.useRef(null);
@@ -22,6 +23,7 @@ const DragDropFile = () => {
     e.stopPropagation();
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      props.onChange(e);
       // handleFiles(e.dataTransfer.files);
     }
   };
@@ -30,6 +32,7 @@ const DragDropFile = () => {
   const handleChange = function (e) {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
+      props.onChange(e);
       // handleFiles(e.target.files);
     }
   };

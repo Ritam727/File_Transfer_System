@@ -1,0 +1,63 @@
+.senderBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100vh;
+  //   border: 2px solid red;
+
+  .SenderContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 70%;
+    width: 80vw;
+    padding: 50px;
+    // border: 2px solid black;
+
+    .Left {
+        // border: 2px solid green;
+      flex: 1;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+
+      .ID {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        button {
+          cursor: pointer;
+          font-size: 20px;
+          font-weight: 700;
+          color: white;
+          background-color: rgb(90, 0, 199);
+          padding: 15px 25px;
+          border-radius: 6px;
+        }
+        
+        h1 {
+          margin: 16px;
+          padding: 10px 100px;
+          border: 1px solid black;
+        }
+      }
+    }
+
+    .Right {
+      border: 2px dashed rgb(90, 0, 199);
+      border-radius: 10px;
+      flex: 1;
+    }
+  }
+}
+
+@media (max-width: 1400px) {
+  .senderBox {
+    .SenderContainer {
+      flex-direction: column;
+    }
+  }
+}
