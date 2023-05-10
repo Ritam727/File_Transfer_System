@@ -16,7 +16,6 @@ const FileReceiver = () => {
   let sender = null;
   let receiverId = null;
   const [socket, setSocket] = useState(null);
-  const [fileList, setFileList] = useState([]);
   let transmittedData = 0;
   let bufferData = [];
   let metadata = {};
@@ -62,7 +61,7 @@ const FileReceiver = () => {
         }
       });
     }
-  }, [socket, fileList]);
+  }, [socket]);
 
   console.log(senderName);
   return (

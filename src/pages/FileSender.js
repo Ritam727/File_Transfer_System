@@ -6,7 +6,6 @@ import "../styles/FileStatus.scss";
 
 import io from "socket.io-client";
 const socket = io();
-let receiverId;
 
 function generateId() {
   return `${Math.trunc(Math.random() * 999)}-${Math.trunc(
@@ -52,7 +51,6 @@ const CreateRoom = () => {
     setJoinId(join);
     socket.emit("sender-join", { uid: join });
     socket.on("init", function (uid) {
-      receiverId = uid;
     });
   }
   function handleFileDragAndDrop(event) {
