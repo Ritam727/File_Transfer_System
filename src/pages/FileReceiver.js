@@ -12,6 +12,7 @@ function generateId() {
 
 const FileReceiver = () => {
   const [senderId, setSenderId] = useState(null);
+  const [senderName, setSenderName] = useState("");
   let sender = null;
   let receiverId = null;
   const [socket, setSocket] = useState(null);
@@ -27,6 +28,7 @@ const FileReceiver = () => {
     sender = event.target[0].value;
     socket.emit("receiver-join", { uid: receiverId, sender_uid: sender });
   }
+  
   useEffect(() => {
     if (socket === null) {
       setSocket(io());
@@ -39,6 +41,7 @@ const FileReceiver = () => {
         let fileElem = createFileElement(metadata.filename, cnt);
         document.getElementById("files").appendChild(fileElem);
         socket.emit("fs-start", { uid: sender });
+        setSenderName(metadata.userName);
       });
       socket.on("fs-share", function (buffer) {
         if (buffer == null) return;
@@ -46,21 +49,22 @@ const FileReceiver = () => {
         transmittedData += buffer.byteLength;
         if (transmittedData === metadata.total_buffer_size) {
           console.log("Downloading ", metadata.filename);
-          document.getElementById(cnt).innerHTML = Math.trunc(
-            (transmittedData * 100) / metadata.total_buffer_size
-          )+"%";
+          document.getElementById(cnt).innerHTML =
+            Math.trunc((transmittedData * 100) / metadata.total_buffer_size) +
+            "%";
           cnt += 1;
           download(new Blob(bufferData), metadata.filename);
         } else {
-          document.getElementById(cnt).innerHTML = Math.trunc(
-            (transmittedData * 100) / metadata.total_buffer_size
-          )+"%";
+          document.getElementById(cnt).innerHTML =
+            Math.trunc((transmittedData * 100) / metadata.total_buffer_size) +
+            "%";
           socket.emit("fs-start", { uid: sender });
         }
       });
     }
   }, [socket, fileList]);
 
+  console.log(senderName);
   return (
     <div className="ReceiverBox">
       <div className="ReceiverContainer">

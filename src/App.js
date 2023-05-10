@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 // import DragDropFile from './components/DragDropFile';
 import Home from "./pages/Home";
-import Room from "./pages/Room";
 import GettingStarted from "./pages/GettingStarted";
 import FileSender from "./pages/FileSender";
 import FileReceiver from "./pages/FileReceiver";

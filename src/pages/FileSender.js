@@ -65,6 +65,7 @@ const CreateRoom = () => {
           filename: file.name,
           total_buffer_size: buffer.length,
           buffer_size: 262144,
+          userName: userName,
         },
         buffer
       );
@@ -75,6 +76,8 @@ const CreateRoom = () => {
   }
 
   function shareFile(metadata, buffer) {
+    // console.log(metadata);
+
     socket.emit("file-meta", {
       uid: joinId,
       metadata: metadata,
@@ -88,9 +91,9 @@ const CreateRoom = () => {
           uid: joinId,
           buffer: chunk,
         });
-        document.getElementById(cnt).innerHTML = Math.trunc(
-          (transmittedData * 100) / metadata.total_buffer_size
-        )+"%";
+        document.getElementById(cnt).innerHTML =
+          Math.trunc((transmittedData * 100) / metadata.total_buffer_size) +
+          "%";
       }
     });
   }
@@ -105,8 +108,11 @@ const CreateRoom = () => {
           <div className="ID">
             {joinId ? (
               <>
-                <h2>{userName}'s Room ID :</h2>
-                <h1>{joinId}</h1>
+                <>
+                  <h2>{userName}'s Room ID :</h2>
+                  <h1>{joinId}</h1>
+                </>
+                <DragDropFile onChange={handleFileUpload}></DragDropFile>
               </>
             ) : (
               <>
@@ -116,17 +122,17 @@ const CreateRoom = () => {
                   type="text"
                   placeholder="Eren Yeager"
                 />
-                <button onClick={click}>Create Room</button>
+                <button className="createRoom" onClick={click}>
+                  Create Room
+                </button>
               </>
             )}
           </div>
-          <DragDropFile onChange={handleFileUpload}></DragDropFile>
         </div>
-            
+
         <div className="SenderRight">
-            <h1>Shared Files</h1>
-            <div className="RightContent" id="files">
-            </div>
+          <h1>Shared Files</h1>
+          <div className="RightContent" id="files"></div>
         </div>
       </div>
     </div>
