@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&family=Roboto:wght@300;400;500&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* CreateRoom page styling */
+
+.createRoomPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .CreateRoomcontainer {
+    width: 80vw;
+    height: 100vh;
+    // border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    .heading {
+      flex: 1;
+      // border: 2px solid red;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+
+      .tagLine {
+        // border: 2px solid red;
+        font-size: 22px;
+        background: -webkit-linear-gradient(
+          rgb(199, 164, 255),
+          rgb(118, 19, 171)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .title {
+        text-align: center;
+        // border: 2px solid red;
+        span {
+          font-size: 32px;
+          background: -webkit-linear-gradient(
+            rgb(199, 164, 255),
+            rgb(118, 19, 171)
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+    }
+
+    .mainFeature {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      flex: 1;
+      width: 100%;
+      // border: 2px solid blue;
+    }
+  }
+}

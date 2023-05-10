@@ -9,7 +9,7 @@
 
 /* Home page styling */
 
-.mainPage {
+.HomePage {
   font-weight: 300;
   height: 100vh;
   width: 100vw;
@@ -23,27 +23,37 @@
     width: 100vw;
     display: flex;
     flex-direction: row;
-    justify-content:center;
+    justify-content: center;
     // border: 2px solid red;
 
     .mainData {
-    //   border: 2px solid red;
+      //   border: 2px solid red;
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
-      
+
       .content {
         width: 90%;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
+        gap: 20px;
         // height: 40%;
         // border: 2px solid red;
-        .logo{
-            display: block;
+        .logo {
+          display: block;
         }
         .tagLine {
           font-family: "Roboto", sans-serif;
+          span {
+            font-size: 40px;
+            background: -webkit-linear-gradient(
+              rgb(199, 164, 255),
+              rgb(118, 19, 171)
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
         }
         h3 {
           color: #767676;
@@ -64,13 +74,6 @@
         }
       }
     }
-
-    .bgImage {
-      position: relative;
-      left: 80px;
-
-    //   border: 2px solid red;
-    }
   }
 }
 
@@ -85,5 +88,9 @@
     .Logo {
       display: none;
     }
+    .content {
+      align-items: center;
+    }
+    align-items: center;
   }
 }

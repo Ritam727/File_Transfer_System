@@ -1,0 +1,32 @@
+.WorkContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 80%;
+  width: 32%;
+  margin-top: 20px;
+  border: 1px dashed blue($color: #000000);
+
+  .Button {
+    button {
+      width: 100%;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      background-color: rgb(90, 0, 199);
+      padding: 15px 25px;
+      border-radius: 6px;
+      //   border: 2px solid red;
+    }
+  }
+
+  .doImage {
+    // border: 2px dashed psink;
+    border-top: none;
+
+    img {
+      max-width: 100%;
+    }
+  }
+}

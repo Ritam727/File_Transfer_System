@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import download from 'downloadjs';
+import download from "downloadjs";
 
 function generateId() {
-  return `${Math.trunc(Math.random() * 999)}-${Math.trunc(Math.random() * 999)}-${Math.trunc(Math.random() * 999)}`;
+  return `${Math.trunc(Math.random() * 999)}-${Math.trunc(
+    Math.random() * 999
+  )}-${Math.trunc(Math.random() * 999)}`;
 }
 
 const Room = () => {
@@ -29,7 +31,7 @@ const Room = () => {
       socket.on("fs-meta", function (metaData) {
         transmittedData = 0;
         metadata = metaData;
-        bufferData = []
+        bufferData = [];
         socket.emit("fs-start", { uid: sender });
       });
       socket.on("fs-share", function (buffer) {
@@ -40,22 +42,23 @@ const Room = () => {
           console.log("Downloading ", metadata.filename);
           download(new Blob(bufferData), metadata.filename);
         } else {
-          socket.emit('fs-start', { uid: sender });
+          socket.emit("fs-start", { uid: sender });
         }
       });
     }
   }, [socket]);
   return (
     <div>
-      {!senderId ?
+      {!senderId ? (
         <form method="GET" onSubmit={submitForm}>
-          <input type='text' name="join-id" id='join-id'></input>
+          <input type="text" name="join-id" id="join-id"></input>
           <button type="submit">Submit</button>
-        </form> :
+        </form>
+      ) : (
         <p>Room id : {senderId}</p>
-      }
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Room
+export default Room;

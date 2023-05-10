@@ -1,17 +1,17 @@
 import React from "react";
-import "../home.scss";
+import "../styles/home.scss";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   let navigate = useNavigate();
   const routeChange = () => {
-    let path = `/createroom`;
+    let path = `/gettingstarted`;
     navigate(path);
   };
 
   return (
     <>
-      <div className="mainPage">
+      <div className="HomePage">
         <div className="container">
           <div className="mainData">
             <div className="Logo">
@@ -20,7 +20,7 @@ const Home = () => {
 
             <div className="content">
               <h1 className="tagLine">
-                Our Innovative <br />  File Transfer System <br />
+                Our Innovative <br />  <span> File Transfer System</span> <br />
                 Streamlines your Workflow
               </h1>
               <h3>
