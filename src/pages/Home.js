@@ -20,7 +20,7 @@ const Home = () => {
 
             <div className="content">
               <h1 className="tagLine">
-                Our Innovative <br /> <span> File Transfer System</span> <br />
+                Our Innovative <span> File Transfer System</span> <br />
                 Streamlines your Workflow
               </h1>
               <h3>
