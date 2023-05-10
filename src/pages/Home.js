@@ -20,12 +20,12 @@ const Home = () => {
 
             <div className="content">
               <h1 className="tagLine">
-                Our Innovative <br />  <span> File Transfer System</span> <br />
+                Our Innovative <br /> <span> File Transfer System</span> <br />
                 Streamlines your Workflow
               </h1>
               <h3>
-                Experience lightning-fast,secure and hassle free file
-                transfers with our cutting-edge platform
+                Experience lightning-fast,secure and hassle free file transfers
+                with our cutting-edge platform
               </h3>
             </div>
 
@@ -43,4 +43,3 @@ const Home = () => {
 };
 
 export default Home;
-
