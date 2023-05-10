@@ -54,7 +54,7 @@ const FileReceiver = () => {
         } else {
           document.getElementById(cnt).innerHTML = Math.trunc(
             (transmittedData * 100) / metadata.total_buffer_size
-          );
+          )+"%";
           socket.emit("fs-start", { uid: sender });
         }
       });
