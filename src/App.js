@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import GettingStarted from "./pages/GettingStarted";
 import FileSender from "./pages/FileSender";
-import FileReceiver from "./pages/FileReceiver";
+import { FileReceiver } from "./pages/FileReceiver";
 
 function App() {
   return (
