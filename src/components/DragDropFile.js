@@ -60,11 +60,12 @@ const DragDropFile = (props) => {
         htmlFor="input-file-upload"
         className={dragActive ? "drag-active" : ""}
       >
-        <div>
-          <p>Drag and drop your file here or</p>
-          <button className="upload-button" onClick={onButtonClick}>
-            Upload a file
-          </button>
+        <div className="data">
+          <img src={require("../images/uploadIcon.png")} alt="" />
+          <p><button className="upload-button" onClick={onButtonClick}>Click to upload</button> or drag and drop</p>
+          <p >
+            Any type of file supported
+          </p>
         </div>
       </label>
       {dragActive && (

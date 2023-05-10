@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 import DragDropFile from "../components/DragDropFile";
-import "../styles/CreateRoom.scss";
+import "../styles/FileSender.scss";
+import "../styles/FileStatus.scss";
 
 import io from "socket.io-client";
 const socket = io();
@@ -15,17 +16,31 @@ function generateId() {
 
 function createFileElement(filename, count) {
   let fileElem = document.createElement("div");
+  fileElem.classList.add("StatusContainer");
+
   let fileName = document.createElement("p");
+  fileName.classList.add("FileName");
+
   let percent = document.createElement("p");
+  percent.classList.add("Percentage");
+
+  let fileIcon = document.createElement("img");
+  fileIcon.src = "Icon.png";
+  fileIcon.classList.add("FileIcon");
+
   fileName.innerHTML = filename;
-  percent.innerHTML = "0";
+  percent.innerHTML = "0%";
   percent.id = count;
-  fileElem.appendChild(fileName);
+
   fileElem.appendChild(percent);
+  fileElem.appendChild(fileIcon);
+  fileElem.appendChild(fileName);
+
   return fileElem;
 }
 
 const CreateRoom = () => {
+  const [userName, setUserName] = useState("");
   const [joinId, setJoinId] = useState(null);
   let join = null;
   let cnt = 0;
@@ -75,29 +90,43 @@ const CreateRoom = () => {
         });
         document.getElementById(cnt).innerHTML = Math.trunc(
           (transmittedData * 100) / metadata.total_buffer_size
-        );
+        )+"%";
       }
     });
   }
+  const takeUserName = (e) => {
+    setUserName(e.target.value);
+  };
+
   return (
-    <div className="senderBox">
+    <div className="SenderBox">
       <div className="SenderContainer">
-        <div className="Left">
+        <div className="SenderLeft">
           <div className="ID">
             {joinId ? (
               <>
-                <h2>Room ID :</h2>
+                <h2>{userName}'s Room ID :</h2>
                 <h1>{joinId}</h1>
               </>
             ) : (
-              <button onClick={click}>Create Room</button>
+              <>
+                <input
+                  value={userName}
+                  onChange={takeUserName}
+                  type="text"
+                  placeholder="Eren Yeager"
+                />
+                <button onClick={click}>Create Room</button>
+              </>
             )}
           </div>
           <DragDropFile onChange={handleFileUpload}></DragDropFile>
         </div>
-
-        <div className="Right" id="files">
-          <h1>hehe</h1>
+            
+        <div className="SenderRight">
+            <h1>Shared Files</h1>
+            <div className="RightContent" id="files">
+            </div>
         </div>
       </div>
     </div>
@@ -105,4 +134,4 @@ const CreateRoom = () => {
 };
 
 export default CreateRoom;
-export {createFileElement};
+export { createFileElement };

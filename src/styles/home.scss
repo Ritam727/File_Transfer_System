@@ -18,8 +18,10 @@
   justify-content: center;
   align-items: center;
   // background-color: rgb(203, 255, 220);
-  background: url("../images/SL-030722-49030-30.jpg");
+
+  background: url("../images/bg1.jpg");
   background-size: cover;
+
 
   .container {
     width: 100vw;
@@ -71,7 +73,7 @@
           font-size: 20px;
           font-weight: 700;
           color: white;
-          background-color: rgb(90, 0, 199);
+          background-color: #865dff;
           padding: 15px 25px;
           border-radius: 6px;
         }

@@ -20,6 +20,18 @@
   border-style: dashed;
   border-color: #cbd5e1;
   background-color: #f8fafc;
+
+  .data {
+    img {
+      margin-bottom: 15px;
+    }
+  }
+  p {
+    button {
+      font-weight: 600;
+      color: #865dff;
+    }
+  }
 }
 
 #label-file-upload.drag-active {
