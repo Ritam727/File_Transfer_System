@@ -13,6 +13,18 @@ function generateId() {
   )}-${Math.trunc(Math.random() * 999)}`;
 }
 
+function createFileElement(filename, count) {
+  let fileElem = document.createElement("div");
+  let fileName = document.createElement("p");
+  let percent = document.createElement("p");
+  fileName.innerHTML = filename;
+  percent.innerHTML = "0";
+  percent.id = count;
+  fileElem.appendChild(fileName);
+  fileElem.appendChild(percent);
+  return fileElem;
+}
+
 const CreateRoom = () => {
   const [joinId, setJoinId] = useState(null);
   let join = null;
@@ -31,15 +43,7 @@ const CreateRoom = () => {
     const fileReader = new FileReader();
     fileReader.onload = function (e) {
       let buffer = new Uint8Array(fileReader.result);
-      const fileElem = document.createElement("div");
-      const fileName = document.createElement("p");
-      const percent = document.createElement("p");
-      fileName.innerHTML = file.name;
-      percent.innerHTML = "0";
-      percent.id = cnt;
-      fileElem.appendChild(fileName);
-      fileElem.appendChild(percent);
-
+      let fileElem = createFileElement(file.name, cnt);
       document.getElementById("files").appendChild(fileElem);
       shareFile(
         {
@@ -101,3 +105,4 @@ const CreateRoom = () => {
 };
 
 export default CreateRoom;
+export {createFileElement};

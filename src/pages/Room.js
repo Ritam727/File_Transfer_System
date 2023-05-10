@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import download from "downloadjs";
+import { createFileElement } from "./CreateRoom";
 
 function generateId() {
   return `${Math.trunc(Math.random() * 999)}-${Math.trunc(
@@ -34,14 +35,7 @@ const Room = () => {
         transmittedData = 0;
         metadata = metaData;
         bufferData = [];
-        const fileElem = document.createElement("div");
-        const fileName = document.createElement("p");
-        const percent = document.createElement("p");
-        fileName.innerHTML = metadata.filename;
-        percent.innerHTML = "0";
-        percent.id = cnt;
-        fileElem.appendChild(fileName);
-        fileElem.appendChild(percent);
+        let fileElem = createFileElement(metadata.filename, cnt);
         document.getElementById("files").appendChild(fileElem);
         socket.emit("fs-start", { uid: sender });
       });
