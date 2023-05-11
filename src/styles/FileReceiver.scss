@@ -86,6 +86,31 @@
   }
 }
 
+// POPUP STYLING
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9;
+}
+
+.modal.open,
+.overlay.open {
+  display: block;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 10;
+}
+
+// SCROLLBAR STYLING
 ::-webkit-scrollbar {
   width: 10px;
 }

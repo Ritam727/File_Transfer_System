@@ -3,11 +3,21 @@ import io from "socket.io-client";
 import download from "downloadjs";
 import { createFileElement } from "./FileSender";
 import "../styles/FileReceiver.scss";
+import Popup from "../components/Popup";
 
 function generateId() {
   return `${Math.trunc(Math.random() * 999)}-${Math.trunc(
     Math.random() * 999
   )}-${Math.trunc(Math.random() * 999)}`;
+}
+
+function addPopup() {
+  document.getElementsByClassName("modal")[0].classList.add("open");
+  document.getElementsByClassName("overlay")[0].classList.add("open");
+}
+function removePopup() {
+  document.getElementsByClassName("modal")[0].classList.remove("open");
+  document.getElementsByClassName("overlay")[0].classList.remove("open");
 }
 
 const FileReceiver = () => {
@@ -63,45 +73,58 @@ const FileReceiver = () => {
     }
   }, [socket]);
 
-  console.log(senderName);
+  // console.log(senderName);
   return (
-    <div className="ReceiverBox">
-      <div className="ReceiverContainer">
-        <div className="ReceiverLeft">
-          <div className="ID">
-            <img
-              className="bgImage"
-              src={require("../images/fileReceiver.png")}
-              alt=""
-            />
-            {senderId ? (
-              <>
-                <h2>Room ID :</h2>
-                <h1>{senderId}</h1>
-              </>
-            ) : (
-              <>
-                <form onSubmit={submitForm}>
-                  <input
-                    type="text"
-                    name="join-id"
-                    id="join-id"
-                    placeholder="696-969-696"
-                  ></input>
-                  <button type="submit">Join Room</button>
-                </form>
-              </>
-            )}
+    <>
+      <div className="overlay"></div>
+
+      <div className="modal">
+        <Popup senderId={senderId}></Popup>
+      </div>
+
+      <div className="ReceiverBox">
+        <div className="ReceiverContainer">
+          <div className="ReceiverLeft">
+            <div className="ID">
+              <img
+                className="bgImage"
+                src={require("../images/fileReceiver.png")}
+                alt=""
+              />
+              {senderId ? (
+                <>
+                  <h2>Room ID :</h2>
+                  <h1>{senderId}</h1>
+                </>
+              ) : (
+                <>
+                  <form
+                    onSubmit={function (e) {
+                      submitForm(e);
+                      addPopup();
+                    }}
+                  >
+                    <input
+                      type="text"
+                      name="join-id"
+                      id="join-id"
+                      placeholder="696-969-696"
+                    ></input>
+                    <button type="submit">Join Room</button>
+                  </form>
+                </>
+              )}
+            </div>
+          </div>
+
+          <div className="ReceiverRight">
+            <h1>Shared Files</h1>
+            <div className="RightContent" id="files"></div>
           </div>
         </div>
-
-        <div className="ReceiverRight">
-          <h1>Shared Files</h1>
-          <div className="RightContent" id="files"></div>
-        </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default FileReceiver;
+export { FileReceiver, removePopup };
