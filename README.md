@@ -34,3 +34,14 @@ Innovative file transfer system to streamline your workflow.
     ```
   https://localhost:5000/
   ```
+
+## Other than the method above, you can also use Docker to directly run the application without having to install any dependencies
+- Make sure you have docker installed on your system.
+
+- Inside the project directory, run the following commands:
+```
+$ docker build -t rapidhive .
+$ docker run --name rapidhive -p 8000:5000 rapidhive
+```
+
+- You can visit the website at `localhost:8000`
