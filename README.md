@@ -1,5 +1,3 @@
-# File_Transfer_System
-
 # Rapid Hive
 Innovative file transfer system to streamline your workflow.
 
