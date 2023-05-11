@@ -45,4 +45,4 @@ def serve(path):
         return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
-    socketio.run(app, port=5000)
+    socketio.run(app, port=5000, host="0.0.0.0")
