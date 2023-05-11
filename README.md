@@ -3,7 +3,7 @@
 # Rapid Hive
 Innovative file transfer system to streamline your workflow.
 
-![Project home page](/landing_page.png "Landing page")
+![Project home page](/LandingPage.png "Landing page")
 
 ## Installation details and User manual
 - To install the software, clone the repository on your system with
