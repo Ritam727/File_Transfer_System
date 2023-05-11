@@ -64,7 +64,7 @@ const CreateRoom = () => {
         {
           filename: file.name,
           total_buffer_size: buffer.length,
-          buffer_size: 262144,
+          buffer_size: 524288,
           userName: userName,
         },
         buffer
