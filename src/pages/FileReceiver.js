@@ -33,6 +33,10 @@ const FileReceiver = () => {
     setSenderId(event.target[0].value);
     sender = event.target[0].value;
     socket.emit("receiver-join", { uid: receiverId, sender_uid: sender });
+    socket.on("wrong-room-id", function (data) {
+      console.log("Wrong Room")
+      setSenderId(null);
+    });
   }
 
   useEffect(() => {
@@ -78,7 +82,7 @@ const FileReceiver = () => {
       <div className="overlay"></div>
 
       <div className="modal">
-        <Popup senderId={senderId}></Popup>
+        <Popup senderId={senderId} correct={senderId}></Popup>
       </div>
 
       <div className="ReceiverBox">
