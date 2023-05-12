@@ -30,7 +30,7 @@ def on_fs_start(data):
 
 @socketio.on('file-raw')
 def on_file_raw(data):
-    emit('fs-share', data['buffer'], room=data['uid'], broadcast = True)
+    emit('fs-share', {'buffer': data['buffer'], 'metadata': data['metadata']}, room=data['uid'], broadcast = True)
 
 @socketio.on("disconnect")
 def on_disconnect():

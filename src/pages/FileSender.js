@@ -13,7 +13,7 @@ function generateId() {
   )}-${Math.trunc(Math.random() * 999)}`;
 }
 
-function createFileElement(filename, count) {
+function createFileElement(filename) {
   let fileElem = document.createElement("div");
   fileElem.classList.add("StatusContainer");
 
@@ -29,7 +29,7 @@ function createFileElement(filename, count) {
 
   fileName.innerHTML = filename;
   percent.innerHTML = "0%";
-  percent.id = count;
+  percent.id = filename;
 
   fileElem.appendChild(percent);
   fileElem.appendChild(fileIcon);
@@ -42,8 +42,7 @@ const CreateRoom = () => {
   const [userName, setUserName] = useState("");
   const [joinId, setJoinId] = useState(null);
   let join = null;
-  let cnt = 0;
-  let transmittedData = 0;
+  let transmittedData = {};
   function click() {
     document.getElementsByClassName("bgImage")[0].classList.add("animate");
 
@@ -53,14 +52,15 @@ const CreateRoom = () => {
     socket.on("init", function (uid) {
     });
   }
-  function handleFileDragAndDrop(event) {
+  async function handleFileDragAndDrop(event) {
     let file = event.dataTransfer.files[0];
+    transmittedData[file.name] = 0;
     const fileReader = new FileReader();
-    fileReader.onload = function (e) {
+    fileReader.onload = async function (e) {
       let buffer = new Uint8Array(fileReader.result);
-      let fileElem = createFileElement(file.name, cnt);
+      let fileElem = createFileElement(file.name);
       document.getElementById("files").appendChild(fileElem);
-      shareFile(
+      await shareFile(
         {
           filename: file.name,
           total_buffer_size: buffer.length,
@@ -71,50 +71,49 @@ const CreateRoom = () => {
       );
     };
     fileReader.readAsArrayBuffer(file);
-    cnt += 1;
-    transmittedData = 0;
   }
-  function handleFileUpload(event) {
+  async function handleFileUpload(event) {
     let file = event.target.files[0];
+    transmittedData[file.name] = 0;
     const fileReader = new FileReader();
-    fileReader.onload = function (e) {
+    fileReader.onload = async function (e) {
       let buffer = new Uint8Array(fileReader.result);
-      let fileElem = createFileElement(file.name, cnt);
+      let fileElem = createFileElement(file.name);
       document.getElementById("files").appendChild(fileElem);
-      shareFile(
+      await shareFile(
         {
           filename: file.name,
           total_buffer_size: buffer.length,
-          buffer_size: 262144,
+          buffer_size: 524288,
           userName: userName,
         },
         buffer
       );
     };
     fileReader.readAsArrayBuffer(file);
-    cnt += 1;
-    transmittedData = 0;
   }
 
-  function shareFile(metadata, buffer) {
+  async function shareFile(metadata, buffer) {
     // console.log(metadata);
-
     socket.emit("file-meta", {
       uid: joinId,
       metadata: metadata,
     });
     socket.on("fs-share", function () {
       let chunk = buffer.slice(0, metadata.buffer_size);
-      transmittedData += chunk.length;
+      transmittedData[metadata.filename] += chunk.length;
       buffer = buffer.slice(metadata.buffer_size, buffer.length);
       if (chunk.length !== 0) {
         socket.emit("file-raw", {
           uid: joinId,
           buffer: chunk,
+          metadata: metadata
         });
-        document.getElementById(cnt).innerHTML =
-          Math.trunc((transmittedData * 100) / metadata.total_buffer_size) +
+        document.getElementById(metadata.filename).innerHTML =
+          Math.trunc((transmittedData[metadata.filename] * 100) / metadata.total_buffer_size) +
           "%";
+      } else {
+        delete transmittedData[metadata.filename];
       }
     });
   }
