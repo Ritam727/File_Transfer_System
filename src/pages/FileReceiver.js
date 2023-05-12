@@ -22,14 +22,11 @@ function removePopup() {
 
 const FileReceiver = () => {
   const [senderId, setSenderId] = useState(null);
-  const [senderName, setSenderName] = useState("");
   let sender = null;
   let receiverId = null;
   const [socket, setSocket] = useState(null);
-  let transmittedData = 0;
-  let bufferData = [];
-  let metadata = {};
-  let cnt = 0;
+  let transmittedData = {};
+  let bufferData = {};
   function submitForm(event) {
     event.preventDefault();
     receiverId = generateId();
@@ -44,28 +41,30 @@ const FileReceiver = () => {
     }
     if (socket) {
       socket.on("fs-meta", function (metaData) {
-        transmittedData = 0;
-        metadata = metaData;
-        bufferData = [];
-        let fileElem = createFileElement(metadata.filename, cnt);
+        transmittedData[metaData.filename] = 0;
+        bufferData[metaData.filename] = [];
+        let fileElem = createFileElement(metaData.filename);
         document.getElementById("files").appendChild(fileElem);
         socket.emit("fs-start", { uid: sender });
-        setSenderName(metadata.userName);
       });
-      socket.on("fs-share", function (buffer) {
-        if (buffer == null) return;
-        bufferData.push(buffer);
-        transmittedData += buffer.byteLength;
-        if (transmittedData === metadata.total_buffer_size) {
+      socket.on("fs-share", function (data) {
+        if (data == null) return;
+        let buffer = data['buffer'];
+        let metadata = data['metadata'];
+        let file = metadata.filename;
+        bufferData[file].push(buffer);
+        transmittedData[file] += buffer.byteLength;
+        if (transmittedData[file] === metadata.total_buffer_size) {
           console.log("Downloading ", metadata.filename);
-          document.getElementById(cnt).innerHTML =
-            Math.trunc((transmittedData * 100) / metadata.total_buffer_size) +
+          document.getElementById(file).innerHTML =
+            Math.trunc((transmittedData[file] * 100) / metadata.total_buffer_size) +
             "%";
-          cnt += 1;
-          download(new Blob(bufferData), metadata.filename);
+          download(new Blob(bufferData[file]), file);
+          delete bufferData[file];
+          delete transmittedData[file];
         } else {
-          document.getElementById(cnt).innerHTML =
-            Math.trunc((transmittedData * 100) / metadata.total_buffer_size) +
+          document.getElementById(file).innerHTML =
+            Math.trunc((transmittedData[file] * 100) / metadata.total_buffer_size) +
             "%";
           socket.emit("fs-start", { uid: sender });
         }
