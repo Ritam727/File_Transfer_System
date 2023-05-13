@@ -1,12 +1,12 @@
 import os
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, request
 from flask_socketio import SocketIO, join_room, emit, leave_room
 from engineio.payload import Payload
 
 Payload.max_decode_packets = 100000
 app = Flask(__name__, static_folder='build')
 socketio = SocketIO(app, async_mode = 'eventlet', async_handlers = True, ping_interval = 50000, ping_timeout = 50000)
-senders = []
+senders = {}
 
 @socketio.on('connect')
 def on_connect():
@@ -15,12 +15,12 @@ def on_connect():
 @socketio.on('sender-join')
 def on_sender_join(data):
     join_room(data['uid'])
-    senders.append(data['uid'])
+    senders[request.sid] = data['uid']
 
 @socketio.on('receiver-join')
 def on_receiver_join(data):
     join_room(data['uid'])
-    if data['sender_uid'] in senders:
+    if data['sender_uid'] in senders.values():
         join_room(data['sender_uid'])
         emit('init', data['uid'], room=data['sender_uid'], broadcast = True)
     else:
@@ -41,6 +41,8 @@ def on_file_raw(data):
 
 @socketio.on("disconnect")
 def on_disconnect():
+    if request.sid in senders.keys():
+        del senders[request.sid]
     print("Client disconnected")
 
 @app.route('/', defaults={'path': ''})
