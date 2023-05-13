@@ -14,7 +14,7 @@ const Popup = (props) => {
           :
           <div className="data">
             <h2>Could not connect</h2>
-            <p>Wrong room Id</p>
+            <p>Wrong room Id or sender disconnected</p>
           </div>
         }
         <div className="close">

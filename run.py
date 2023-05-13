@@ -42,6 +42,7 @@ def on_file_raw(data):
 @socketio.on("disconnect")
 def on_disconnect():
     if request.sid in senders.keys():
+        emit('sender-left', None, room=senders[request.sid], broadcast = True)
         del senders[request.sid]
     print("Client disconnected")
 

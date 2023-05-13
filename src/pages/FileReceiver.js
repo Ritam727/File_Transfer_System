@@ -73,6 +73,10 @@ const FileReceiver = () => {
           socket.emit("fs-start", { uid: sender });
         }
       });
+      socket.on("sender-left", function (data) {
+        setSenderId(null);
+        addPopup();
+      });
     }
   }, [socket]);
 
